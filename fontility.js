@@ -4,14 +4,6 @@ var Fontility = (function(global)
     
     ///
     
-    function getWidth(/* ...names */)
-    {
-        var names = Array.prototype.join.call(arguments);
-        
-        return (context.font = [ size, names ].join(space))
-            && (context.measureText(text).width);
-    }
-    
     function asObject(name)
     {
         return { name: name, width: getWidth(name) };
@@ -20,6 +12,14 @@ var Fontility = (function(global)
     function inQuotes(name)
     {
         return quote + name + quote;
+    }
+    
+    function getWidth(/* ...names */)
+    {
+        var names = Array.prototype.join.call(arguments);
+        
+        return (context.font = [ size, names ].join(space))
+            && (context.measureText(text).width);
     }
     
     ///
