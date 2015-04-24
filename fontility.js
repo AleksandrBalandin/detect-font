@@ -47,10 +47,7 @@ var Fontility = (function(global)
         },
         wider: function(a, b)
         {
-            a = getWidth(inQuotes(a));
-            b = getWidth(inQuotes(b));
-            
-            return b - a;
+            return getWidth(inQuotes(b)) - getWidth(inQuotes(a));
         },
         widest: function(/* ...names */)
         {
