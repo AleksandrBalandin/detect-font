@@ -24,15 +24,15 @@ var Fontility = (function(global)
     
     ///
     
-    var context = global.document
-        .createElement("canvas")
-        .getContext("2d");
-    
-    var size = "72px";
+    var size = "2cm";
     var text = "abcdefghijklmnopqrstuvwxyz_0123456789";
     
     var quote = String.fromCharCode(39);
     var space = String.fromCharCode(32);
+    
+    var context = global.document
+        .createElement("canvas")
+        .getContext("2d");
     
     var generic = [ "serif", "sans-serif", "cursive", "fantasy", "monospace" ];
         generic = generic.map(asObject);
@@ -41,20 +41,23 @@ var Fontility = (function(global)
     
     return Object,
     {
+        width: function(name)
+        {
+            return + (getWidth(inQuotes(name)) / 1e3).toFixed(2);
+        },
         wider: function(a, b)
         {
             a = getWidth(inQuotes(a));
             b = getWidth(inQuotes(b));
             
-            return a - b;
+            return b - a;
         },
         widest: function(/* ...names */)
         {
             return Array.prototype.map.call(arguments, inQuotes)
                 .map(asObject)
-                .sort(function(a, b) { return b.width - a.width; })
-                .shift().name
-                .slice(1, -1);
+                .reduce(function(a, b) { return (b.width > a.width ? b : a); })
+                .name.slice(1, -1);
         },
         detect: function(/* ...names */)
         {
