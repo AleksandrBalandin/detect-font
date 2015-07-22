@@ -1,70 +1,104 @@
 var Fontility = (function(global)
 {
-    "use strict";
-    
+    "use strict"
+
     ///
-    
-    function asObject(name)
+
+    function asObject(name, index)
     {
-        return { name: name, width: getWidth(name) };
+        return Object,
+        {
+            name: name,
+            index: index,
+            width: getWidth(name)
+        }
     }
-    
+
+    function getWidth(name)
+    {
+        return (context.font = [ size, name ].join(space))
+            && (context.measureText(text).width)
+    }
+
     function inQuotes(name)
     {
-        return quote + name + quote;
+        return quote + name + quote
     }
-    
-    function getWidth(/* ...names */)
+
+    ///
+
+    var $ =
+    ([
+        , "map"
+        , "some"
+        , "every"
+    ]).map(function(method)
     {
-        var names = Array.prototype.join.call(arguments);
-        
-        return (context.font = [ size, names ].join(space))
-            && (context.measureText(text).width);
-    }
-    
+        return Function.prototype.call.bind(
+            Array.prototype[method]
+        )
+    })
+
     ///
-    
-    var size = "2cm";
-    var text = "abcdefghijklmnopqrstuvwxyz_0123456789";
-    
-    var quote = String.fromCharCode(39);
-    var space = String.fromCharCode(32);
-    
-    var context = global.document
+
+    var size = "2cm"
+    var text = "abcdefghijklmnopqrstuvwxyz_0123456789"
+
+    var quote = String.fromCharCode(39)
+    var space = String.fromCharCode(32)
+
+    var context = document
         .createElement("canvas")
-        .getContext("2d");
-    
-    var generic = [ "serif", "sans-serif", "cursive", "fantasy", "monospace" ];
-        generic = generic.map(asObject);
-    
+        .getContext("2d")
+
+    var generic =
+    ([
+        , "serif"
+        , "sans-serif"
+        , "cursive"
+        , "fantasy"
+        , "monospace"
+    ]).map(asObject)
+
     ///
-    
+
     return Object,
     {
-        width: function(name)
+        _width: function(name)
         {
-            return + (getWidth(inQuotes(name)) / 1e3).toFixed(2);
+            return + (getWidth(inQuotes(name)) / 1e3).toFixed(2)
         },
-        wider: function(a, b)
+        _wider: function(a, b)
         {
-            return getWidth(inQuotes(b)) - getWidth(inQuotes(a));
+            return getWidth(inQuotes(b)) - getWidth(inQuotes(a))
         },
-        widest: function(/* ...names */)
+        _widest: function(/* ...names */)
         {
-            return Array.prototype.map.call(arguments, inQuotes)
+            var index = $.map(arguments, inQuotes)
                 .map(asObject)
-                .reduce(function(a, b) { return (b.width > a.width ? b : a); })
-                .name.slice(1, -1);
+                .sort(function(a, b) { return a.width - b.width })
+                .pop()
+                .index
+
+            return arguments[index]
         },
-        detect: function(/* ...names */)
+
+        ///
+
+        some: function(/* ...names */)
         {
-            return Array.prototype.some.call(arguments, function(name)
+            return $.some(arguments, this.check)
+        },
+        every: function(/* ...names */)
+        {
+            return $.every(arguments, this.check)
+        },
+        check: function(name)
+        {
+            return generic.some(function(font)
             {
-                return generic.some(function(font)
-                {
-                    return getWidth(inQuotes(name), font.name) != font.width;
-                });
-            });
+                return getWidth(inQuotes(name), font.name) != font.width
+            })
         }
-    };
-})(this);
+    }
+})(this)
