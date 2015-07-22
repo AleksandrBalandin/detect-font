@@ -2,31 +2,6 @@ define(function()
 {
     "use strict"
 
-    ///
-
-    function asObject(name, index)
-    {
-        return Object,
-        {
-            name: name,
-            index: index,
-            width: getWidth(name)
-        }
-    }
-
-    function getWidth(name)
-    {
-        return (context.font = [ size, name ].join(space))
-            && (context.measureText(text).width)
-    }
-
-    function inQuotes(name)
-    {
-        return quote + name + quote
-    }
-
-    ///
-
     var _ =
     ([
         , "map"
@@ -38,8 +13,6 @@ define(function()
             Array.prototype[method]
         )
     })
-
-    ///
 
     var size = "2cm"
     var text = "abcdefghijklmnopqrstuvwxyz_0123456789"
@@ -60,10 +33,10 @@ define(function()
         , "monospace"
     ]).map(asObject)
 
-    ///
-
     return Object,
     {
+        /* character width comparison */
+
         width: function(name)
         {
             return + (getWidth(inQuotes(name)) / 1e3).toFixed(2)
@@ -82,7 +55,7 @@ define(function()
             return arguments[widest.index]
         },
 
-        ///
+        /* font detection */
 
         some: function(/* ...names */)
         {
@@ -99,5 +72,26 @@ define(function()
                 return getWidth(inQuotes(name), font.name) != font.width
             })
         }
+    }
+
+    function asObject(name, index)
+    {
+        return Object,
+        {
+            name: name,
+            index: index,
+            width: getWidth(name)
+        }
+    }
+
+    function getWidth(name)
+    {
+        return (context.font = [ size, name ].join(space))
+            && (context.measureText(text).width)
+    }
+
+    function inQuotes(name)
+    {
+        return quote + name + quote
     }
 })
