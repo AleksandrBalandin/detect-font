@@ -1,4 +1,4 @@
-var Fontility = (function(global)
+define(function()
 {
     "use strict"
 
@@ -101,4 +101,4 @@ var Fontility = (function(global)
             })
         }
     }
-})(this)
+})
