@@ -35,6 +35,24 @@ define(function()
 
     return Object,
     {
+        /* font detection */
+
+        some: function(/* ...names */)
+        {
+            return _.some(arguments, this.check)
+        },
+        every: function(/* ...names */)
+        {
+            return _.every(arguments, this.check)
+        },
+        check: function(name)
+        {
+            return generic.some(function(font)
+            {
+                return getWidth(inQuotes(name), font.name) != font.width
+            })
+        },
+
         /* character width comparison */
 
         width: function(name)
@@ -53,24 +71,6 @@ define(function()
                 .shift()
 
             return arguments[widest.index]
-        },
-
-        /* font detection */
-
-        some: function(/* ...names */)
-        {
-            return _.some(arguments, this.check)
-        },
-        every: function(/* ...names */)
-        {
-            return _.every(arguments, this.check)
-        },
-        check: function(name)
-        {
-            return generic.some(function(font)
-            {
-                return getWidth(inQuotes(name), font.name) != font.width
-            })
         }
     }
 
