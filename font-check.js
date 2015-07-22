@@ -87,9 +87,11 @@ define(function()
         }
     }
 
-    function getWidth(name)
+    function getWidth(/* ...names */)
     {
-        return (context.font = [ size, name ].join(space))
+        var names = _.join(arguments)
+
+        return (context.font = [ size, names ].join(space))
             && (context.measureText(text).width)
     }
 
