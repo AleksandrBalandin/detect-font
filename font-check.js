@@ -5,14 +5,17 @@ define(function()
     var _ =
     ([
         , "map"
+        , "join"
         , "some"
         , "every"
-    ]).map(function(method)
+    ]).reduce(function(utility, method)
     {
-        return Function.prototype.call.bind(
+        utility[method] = Function.prototype.call.bind(
             Array.prototype[method]
         )
-    })
+
+        return utility
+    },  { })
 
     var size = "2cm"
     var text = "abcdefghijklmnopqrstuvwxyz_0123456789"
