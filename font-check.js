@@ -74,13 +74,12 @@ define(function()
         },
         widest: function(/* ...names */)
         {
-            var index = _.map(arguments, inQuotes)
+            var widest = _.map(arguments, inQuotes)
                 .map(asObject)
                 .sort(function(a, b) { return a.width - b.width })
                 .pop()
-                .index
 
-            return arguments[index]
+            return arguments[widest.index]
         },
 
         ///
