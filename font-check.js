@@ -76,8 +76,8 @@ define(function()
         {
             var widest = _.map(arguments, inQuotes)
                 .map(asObject)
-                .sort(function(a, b) { return a.width - b.width })
-                .pop()
+                .sort(function(a, b) { return b.width - a.width })
+                .shift()
 
             return arguments[widest.index]
         },
