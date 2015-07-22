@@ -27,7 +27,7 @@ define(function()
 
     ///
 
-    var $ =
+    var _ =
     ([
         , "map"
         , "some"
@@ -64,17 +64,17 @@ define(function()
 
     return Object,
     {
-        _width: function(name)
+        width: function(name)
         {
             return + (getWidth(inQuotes(name)) / 1e3).toFixed(2)
         },
-        _wider: function(a, b)
+        wider: function(a, b)
         {
             return getWidth(inQuotes(b)) - getWidth(inQuotes(a))
         },
-        _widest: function(/* ...names */)
+        widest: function(/* ...names */)
         {
-            var index = $.map(arguments, inQuotes)
+            var index = _.map(arguments, inQuotes)
                 .map(asObject)
                 .sort(function(a, b) { return a.width - b.width })
                 .pop()
@@ -87,11 +87,11 @@ define(function()
 
         some: function(/* ...names */)
         {
-            return $.some(arguments, this.check)
+            return _.some(arguments, this.check)
         },
         every: function(/* ...names */)
         {
-            return $.every(arguments, this.check)
+            return _.every(arguments, this.check)
         },
         check: function(name)
         {
