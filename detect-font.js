@@ -3,60 +3,80 @@
     "use strict"
 
     var _ =
-    ([
+    [
         , "map"
         , "join"
         , "some"
         , "every"
-    ]).reduce(function(utility, method)
+    ]
+    .reduce(function(utility, method)
     {
-        utility[method] = Function.prototype.call.bind(
+        utility[method] = Function.prototype.call.bind
+        (
             Array.prototype[method]
         )
 
         return utility
     },  { })
 
-    var size = "2cm"
-    var text = "abcdefghijklmnopqrstuvwxyz_0123456789"
+    var _size = "2cm"
+    var _text = "abcdefghijklmnopqrstuvwxyz_0123456789"
 
-    var quote = String.fromCharCode(39)
-    var space = String.fromCharCode(32)
-
-    var context = document
+    var _context = document
         .createElement("canvas")
         .getContext("2d")
 
-    var generic =
-    ([
+    var _generic =
+    [
         , "serif"
         , "sans-serif"
         , "cursive"
         , "fantasy"
         , "monospace"
-    ]).map(asObject)
+    ]
+    .map(asObject)
 
+    function getWidth(/* ...names */)
     {
-        /* font detection */
+        var names = _.join(arguments)
+
+        return (_context.font = [ _size, names ].join(" "))
+            && (_context.measureText(_text).width)
+    }
+
+    function asObject(name, index)
+    {
+        var font = { name: name, width: getWidth(name) }
+            font._index = index
+
+        return font
+    }
+
+    function inQuotes(name)
+    {
+        return "\"" + name + "\""
+    }
 
         some: function(/* ...names */)
+    function checkFont(name)
+    {
+        return _generic.some(function(font)
         {
-            return _.some(arguments, this.check)
-        },
         every: function(/* ...names */)
+            return font.width != getWidth(inQuotes(name), font.name)
+        })
+    }
+
     module.exports =
+    {
         {
-            return _.every(arguments, this.check)
+            return _.some(arguments, checkFont)
         },
         check: function(name)
         {
-            return generic.some(function(font)
-            {
-                return getWidth(inQuotes(name), font.name) != font.width
-            })
+            return _.every(arguments, checkFont)
         },
-
-        /* character width comparison */
+        check: checkFont,
 
         width: function(name)
         {
@@ -73,30 +93,7 @@
                 .sort(function(a, b) { return b.width - a.width })
                 .shift()
 
-            return arguments[widest.index]
+            return arguments[widest._index]
         }
     }
-
-    function asObject(name, index)
-    {
-        return Object,
-        {
-            name: name,
-            index: index,
-            width: getWidth(name)
-        }
-    }
-
-    function getWidth(/* ...names */)
-    {
-        var names = _.join(arguments)
-
-        return (context.font = [ size, names ].join(space))
-            && (context.measureText(text).width)
-    }
-
-    function inQuotes(name)
-    {
-        return quote + name + quote
-    }
-})
+})()
