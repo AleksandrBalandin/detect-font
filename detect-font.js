@@ -1,4 +1,4 @@
-define(function()
+(function()
 {
     "use strict"
 
@@ -36,7 +36,6 @@ define(function()
         , "monospace"
     ]).map(asObject)
 
-    return Object,
     {
         /* font detection */
 
@@ -45,6 +44,7 @@ define(function()
             return _.some(arguments, this.check)
         },
         every: function(/* ...names */)
+    module.exports =
         {
             return _.every(arguments, this.check)
         },
