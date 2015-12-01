@@ -19,7 +19,7 @@
         return utility
     },  { })
 
-    var _size = "2cm"
+    var _size = devicePixelRatio * 36 + "px"
     var _text = Array.apply(Array,
     {
         length: 42
