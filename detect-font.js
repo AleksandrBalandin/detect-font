@@ -79,7 +79,9 @@
 
         width: function(name)
         {
-            return + (getWidth(inQuotes(name)) / 1e3).toFixed(2)
+            return checkFont(name)
+                ? + (getWidth(inQuotes(name)) / 1000).toFixed(2)
+                : NaN
         },
         wider: function(a, b)
         {
