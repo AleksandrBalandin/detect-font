@@ -34,9 +34,9 @@
         , "fantasy"
         , "monospace"
     ]
-    .map(asObject)
+    .map(_asObject)
 
-    function getWidth(/* ...names */)
+    function _getWidth(/* ...names */)
     {
         var names = _.join(arguments)
 
@@ -44,15 +44,15 @@
             && (_context.measureText(_text).width)
     }
 
-    function asObject(name, index)
+    function _asObject(name, index)
     {
-        var font = { name: name, width: getWidth(name) }
+        var font = { name: name, width: _getWidth(name) }
             font._index = index
 
         return font
     }
 
-    function inQuotes(name)
+    function _inQuotes(name)
     {
         return "\"" + name + "\""
     }
@@ -61,7 +61,7 @@
     {
         return _generic.some(function(font)
         {
-            return font.width != getWidth(inQuotes(name), font.name)
+            return font.width != _getWidth(_inQuotes(name), font.name)
         })
     }
 
@@ -70,17 +70,17 @@
         width: function(name)
         {
             return checkFont(name)
-                ? + (getWidth(inQuotes(name)) / 1000).toFixed(2)
+                ? +(_getWidth(_inQuotes(name)) / 1e3).toFixed(2)
                 : NaN
         },
         wider: function(a, b)
         {
-            return getWidth(inQuotes(b)) - getWidth(inQuotes(a))
+            return _getWidth(_inQuotes(b)) - _getWidth(_inQuotes(a))
         },
         widest: function(/* ...names */)
         {
-            var widest = _.map(arguments, inQuotes)
-                .map(asObject)
+            var widest = _.map(arguments, _inQuotes)
+                .map(_asObject)
                 .sort(function(a, b) { return b.width - a.width })
                 .shift()
 
