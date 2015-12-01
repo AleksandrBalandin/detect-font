@@ -20,7 +20,15 @@
     },  { })
 
     var _size = "2cm"
-    var _text = "abcdefghijklmnopqrstuvwxyz_0123456789"
+    var _text = Array.apply(Array,
+    {
+        length: 42
+    })
+    .map(function(undefined, index)
+    {
+        return String.fromCharCode(index + 48)
+    })
+    .join("")
 
     var _context = document
         .createElement("canvas")
