@@ -57,7 +57,6 @@
         return "\"" + name + "\""
     }
 
-        some: function(/* ...names */)
     function checkFont(name)
     {
         return _generic.some(function(font)
@@ -69,6 +68,7 @@
 
     module.exports =
     {
+        any: function(/* ...names */)
         {
             return _.some(arguments, checkFont)
         },
