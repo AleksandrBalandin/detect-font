@@ -67,16 +67,6 @@
 
     module.exports =
     {
-        any: function(/* ...names */)
-        {
-            return _.some(arguments, checkFont)
-        },
-        all: function(/* ...names */)
-        {
-            return _.every(arguments, checkFont)
-        },
-        check: checkFont,
-
         width: function(name)
         {
             return checkFont(name)
@@ -95,6 +85,15 @@
                 .shift()
 
             return arguments[widest._index]
-        }
+        },
+        any: function(/* ...names */)
+        {
+            return _.some(arguments, checkFont)
+        },
+        all: function(/* ...names */)
+        {
+            return _.every(arguments, checkFont)
+        },
+        check: checkFont
     }
 })()
