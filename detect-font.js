@@ -61,7 +61,6 @@
     {
         return _generic.some(function(font)
         {
-        every: function(/* ...names */)
             return font.width != getWidth(inQuotes(name), font.name)
         })
     }
@@ -72,7 +71,7 @@
         {
             return _.some(arguments, checkFont)
         },
-        check: function(name)
+        all: function(/* ...names */)
         {
             return _.every(arguments, checkFont)
         },
